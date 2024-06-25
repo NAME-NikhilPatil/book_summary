@@ -1,120 +1,175 @@
+import 'package:book_summary/components/button.dart';
+import 'package:book_summary/constants/constants.dart';
+import 'package:book_summary/sign_in_sceen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  final PageController _pageController = PageController();
+  int _currentIndex = 0;
+
+  final List<Map<String, String>> _pages = [
+    {
+      'image': 'assets/splash1.png',
+      'title': 'Books in 15 minutes',
+      'description':
+          'We read the best books, highlight key ideas and insights, and create summaries for you'
+    },
+    {
+      'image': 'assets/splash2.png',
+      'title': 'Read and listen anywhere',
+      'description':
+          'Download content to read, listen, or do both at the same time offline'
+    },
+    {
+      'image': 'assets/splash3.png',
+      'title': 'Personal growth plan',
+      'description':
+          'Set your learning goals and accept a personalized challenge'
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color(0xFFFDF8F6), // Background color matching the image
+      backgroundColor: backgroundColor, // Background color matching the image
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // Image
-              Image.asset(
-                'assets/splash1.png',
-                // height: MediaQuery.of(context).size.height * 0.4,
-                // fit: BoxFit.contain,
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 40,
+            ),
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                itemCount: _pages.length,
+                itemBuilder: (context, index) {
+                  return _buildPage(
+                    image: _pages[index]['image']!,
+                    title: _pages[index]['title']!,
+                    description: _pages[index]['description']!,
+                  );
+                },
               ),
-              // Progress Indicator
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildProgressDot(true),
-                    _buildProgressDot(false),
-                    _buildProgressDot(false),
+            ),
+            Kbutton(
+                text: "Continue",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>  const SignInScreen()),
+                  );
+                }),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Already have an account? ',
+                  style: const TextStyle(color: Colors.grey),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Login',
+                      style: TextStyle(color: primaryColor),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          // Handle login tap
+                        },
+                    ),
                   ],
                 ),
               ),
-              // Title
-              const Text(
-                'Books in 15 minutes',
-                style: TextStyle(
-                  fontSize: 22, // Adjusted font size
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              // Subtitle
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
-                child: Text(
-                  'We read the best books, highlight key ideas and insights, and create summaries for you',
-                  style: TextStyle(
-                    fontSize: 15, // Adjusted font size
-                    color: Colors.grey,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              // Continue Button
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 20.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Handle button press
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15), // Fixed button height
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    child: const Text(
-                      'Continue',
-                      style: TextStyle(
-                        fontSize: 16, // Button text size
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // Login Text
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Already have an account? ',
-                    style: const TextStyle(color: Colors.grey),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Login',
-                        style: const TextStyle(color: Colors.blue),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            // Handle login tap
-                          },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildProgressDot(bool isActive) {
+  Widget _buildPage({
+    required String image,
+    required String title,
+    required String description,
+  }) {
+    return Column(
+      children: <Widget>[
+        Image.asset(
+          image,
+          height: MediaQuery.of(context).size.height * 0.4,
+          fit: BoxFit.contain,
+        ),
+        SizedBox(
+          height: 18,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10.0,
+            horizontal: 20.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: List.generate(_pages.length, (index) {
+              return _buildProgressDot(index == _currentIndex, index + 1);
+            }),
+          ),
+        ),
+        SizedBox(
+          height: 12,
+        ),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 32, // Adjusted font size
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.start,
+        ),
+        SizedBox(
+          height: 9,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: Text(
+            description,
+            style: const TextStyle(
+              fontSize: 18, // Adjusted font size
+              color: Colors.grey,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProgressDot(bool isActive, int pageNumber) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4.0),
-      width: 10,
-      height: 10,
+      width: 30,
+      height: 30,
       decoration: BoxDecoration(
         color: isActive ? Colors.blue : Colors.grey[300],
         shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Text(
+          '$pageNumber', // Static numbers: 1, 2, 3
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
