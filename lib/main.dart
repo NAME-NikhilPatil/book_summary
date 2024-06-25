@@ -1,3 +1,4 @@
+import 'package:book_summary/navigatin_bar.dart';
 import 'package:book_summary/splash_sceen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         // primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SplashScreen(),
+      home: Navigation_Bar(),
     );
   }
 }

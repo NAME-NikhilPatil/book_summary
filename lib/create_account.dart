@@ -1,6 +1,6 @@
 import 'package:book_summary/components/button.dart';
 import 'package:book_summary/constants/constants.dart';
-import 'package:book_summary/home_screen.dart';
+import 'package:book_summary/navigatin_bar.dart';
 import 'package:book_summary/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -109,7 +109,7 @@ class CreateAccountScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomeScreen(),
+                      builder: (context) => Navigation_Bar(),
                     ),
                   );
                 }),

@@ -1,7 +1,7 @@
 import 'package:book_summary/components/button.dart';
 import 'package:book_summary/constants/constants.dart';
 import 'package:book_summary/create_account.dart';
-import 'package:book_summary/home_screen.dart';
+import 'package:book_summary/navigatin_bar.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>  HomeScreen(),
+                      builder: (context) => Navigation_Bar(),
                     ),
                   );
                 }),

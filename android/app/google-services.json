@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133280892873",
+    "project_id": "book-summary-app-57155",
+    "storage_bucket": "book-summary-app-57155.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133280892873:android:e932bbdcdeceb8cb474a18",
+        "android_client_info": {
+          "package_name": "com.example.book_summary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOkIoXV93oYv-lWEN2v_W4gzn9tQEERYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
